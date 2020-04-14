@@ -1,0 +1,46 @@
+
+conda create --name dog-project python=3.6
+conda activate dog-project
+pip install h5py==2.10.0
+pip install matplotlib==3.2.1
+pip install numpy==1.16.4
+pip install scipy==1.4.1
+pip install tqdm==4.44.1
+pip install keras==2.0.8
+pip install scikit-learn==0.22.2
+pip install pillow==7.1.0
+pip install ipykernel==5.2.0
+pip install tensorflow-gpu==1.2.1
+pip install opencv-python==4.2.0.32
+
+
+Alternativelly execute
+
+conda env create -f dog-project_environment-conda.yml       => instalation made by CONDA
+
+conda env create -f dog-project_environment-pip.yml         => instalation made by pip
+
+
+KERAS_BACKEND=tensorflow python -c "from keras import backend"
+
+
+
+
+conda install jupyter
+
+Some warning related to TensorRT will be shown but it is a optional libray that works only on CUDA 9 and 10 (I have installed version 8) : https://stackoverflow.com/questions/60368298/could-not-load-dynamic-library-libnvinfer-so-6
+
+
+THIS IS ONLY NECCESARY FOR 
+create an IPython kernel for the dog-project environment.
+python -m ipykernel install --user --name dog-project --display-name "dog-project"
+
+
+dogs
+wget https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip; unzip dogImages.zip; rm dogImages.zip
+
+humans
+wget https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip; unzip lfw.zip; rm lfw.zip
+
+
+mkdir bottleneck_features; cd bottleneck_features; wget https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/DogVGG16Data.npz; cd ..
