@@ -29,12 +29,6 @@ if __name__ == '__main__':
     id_task = int(os.getenv('SLURM_ARRAY_TASK_ID'))
     n_tasks = int(os.getenv('SLURM_ARRAY_TASK_MAX')) + 1
 
-    print('host_name        - ', socket.gethostname())
-    print('task_id          - ', id_task)
-    print('n_nodes          - ', n_nodes)
-    print('n_tasks_per_node - ', n_tasks_per_node)
-    print('n_tasks          - ', n_tasks)
-    print(opt.dataset_scans_path, ' - Working section ', int(id_task) + 1, '/', n_tasks)
 
     output_path = os.path.join(opt.output_path, "task_" + str(id_task))
     if not os.path.exists(output_path):
@@ -54,6 +48,12 @@ if __name__ == '__main__':
     scannet_data.sens_files = [scannet_data.sens_files[i] for i in work_idxs]
     scannet_data.env_files = [scannet_data.env_files[i] for i in work_idxs]
 
+    logging.info('host_name        - '+ socket.gethostname())
+    logging.info('id_task          - '+ str(id_task))
+    logging.info('n_nodes          - '+ str(n_nodes))
+    logging.info('n_tasks_per_node - '+ str(n_tasks_per_node))
+    logging.info('n_tasks          - '+ str(n_tasks))
+    logging.info(opt.dataset_scans_path+ ' - Working section '+ str(id_task + 1)+ '/'+ str(n_tasks))
     logging.info(str(work_idxs))
 
     follow_up_file = os.path.join(output_path, Pipe.follow_up_file_name)
@@ -67,8 +67,8 @@ if __name__ == '__main__':
     p_registration.process(output_path)
     #
     # ##### -------------------------------------------------------------------------------------------------- #######
-    p_search_invalid_Poses = PipeSearchInvalidPoses(follow_up_data, scannet_data)
-    p_search_invalid_Poses.process(output_path)
+    #p_search_invalid_Poses = PipeSearchInvalidPoses(follow_up_data, scannet_data)
+    #p_search_invalid_Poses.process(output_path)
     #
     # ##### -------------------------------------------------------------------------------------------------- #######
     p_test_propagate = PipeCalculatePropagator(follow_up_data, scannet_data, opt.interactions_path,

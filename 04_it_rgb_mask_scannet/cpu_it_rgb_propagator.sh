@@ -20,4 +20,4 @@ export PYTHONPATH=/mnt/storage/home/csapo/git_repositories/iTpy:/mnt/storage/hom
 
 
 
-srun python 11_pipeline_extraction.py --dataset_scans_path /mnt/storage/scratch/csapo/ScanNet/scans --output_path /mnt/storage/scratch/csapo/ScanNet_analysis --interactions_path /mnt/storage/home/csapo/projects/it_rgb_mask_scannet/data/descriptors_repository/IBSMesh_400_4_OnGivenPointCloudWeightedSampler_5_500 --json_conf_execution_file /mnt/storage/home/csapo/projects/it_rgb_mask_scannet/data/single_testing.json
+srun python 11_pipeline_extraction.py --dataset_scans_path /mnt/storage/scratch/csapo/ScanNet_small/scans --output_path /mnt/storage/scratch/csapo/ScanNet_small_analysis --interactions_path /mnt/storage/home/csapo/projects/it_rgb_mask_scannet/data/descriptors_repository/IBSMesh_400_4_OnGivenPointCloudWeightedSampler_5_500 --json_conf_execution_file /mnt/storage/home/csapo/projects/it_rgb_mask_scannet/data/single_testing.json
