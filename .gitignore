@@ -12,3 +12,5 @@
 05_scannet_work_distribution/01_rgb_propagation_sitting/output_*/
 
 05_scannet_work_distribution/00_registration/output_*/
+
+*.out
