@@ -63,8 +63,8 @@ if __name__ == '__main__':
         follow_up_data = pd.read_csv(follow_up_file, index_col=0)
 
     ##### -------------------------------------------------------------------------------------------------- #######
-    p_registration = PipeRegistration(follow_up_data, scannet_data)
-    p_registration.process(output_path)
+    #p_registration = PipeRegistration(follow_up_data, scannet_data)
+    #p_registration.process(output_path)
     #
     # ##### -------------------------------------------------------------------------------------------------- #######
     #p_search_invalid_Poses = PipeSearchInvalidPoses(follow_up_data, scannet_data)
