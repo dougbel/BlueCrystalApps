@@ -2,9 +2,9 @@
 
 #SBATCH --job-name=mpi4py_test
 #SBATCH --partition=test
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=4
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=2
 #SBATCH --time=00:01:00
 #SBATCH --mem=1G
 
@@ -14,4 +14,4 @@ module load languages/anaconda3/3.7
 
 source activate mpi_trimesh_test
 
-srun python hello_mpi.py
+srun --mpi=pmi2 python hello_mpi.py
