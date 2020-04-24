@@ -16,3 +16,5 @@
 07_compilator/data/
 
 *.out
+
+07_compilator/output/
