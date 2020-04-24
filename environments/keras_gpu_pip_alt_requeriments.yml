@@ -1,4 +1,4 @@
-name: dog-project-pip_1.2.1
+name: keras_gpu_pip_alt
 channels:
   - defaults
 dependencies:
@@ -65,5 +65,4 @@ dependencies:
     - traitlets==4.3.3
     - wcwidth==0.1.9
     - werkzeug==1.0.1
-prefix: /home/dougbel/ExtraSoftware/anaconda3/envs/dog-project
 

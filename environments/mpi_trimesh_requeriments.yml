@@ -1,4 +1,4 @@
-name: mpi_trimesh_test
+name: mpi_trimesh
 channels:
   - open3d-admin
   - conda-forge
@@ -311,5 +311,5 @@ dependencies:
     - python-fcl==0.0.12
     - vtk==8.1.2
     - vtkplotter==2019.4.10
-prefix: /mnt/storage/home/csapo/.conda/envs/mpi_trimesh_test
+
 

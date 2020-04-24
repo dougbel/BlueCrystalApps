@@ -12,6 +12,7 @@
 module load OpenMPI/2.0.1-gcccuda-2016.10
 module load languages/anaconda3/3.7
 
-source activate mpi_trimesh_test
+source activate mpi_trimesh
+export PATH=$HOME/.conda/envs/mpi_trimesh/bin:$PATH
 
 srun --mpi=pmi2 python hello_mpi.py

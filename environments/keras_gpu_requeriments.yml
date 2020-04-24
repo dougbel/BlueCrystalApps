@@ -1,4 +1,4 @@
-name: dog-project
+name: keras_gpu
 channels:
   - anaconda
   - defaults
@@ -137,5 +137,5 @@ dependencies:
     - keras-preprocessing==1.1.0
     - opencv-python==4.2.0.32
     - pyyaml==5.3.1
-prefix: /home/dougbel/ExtraSoftware/anaconda3/envs/dog-project
+
 

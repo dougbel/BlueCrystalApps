@@ -16,8 +16,8 @@ module load CUDA/8.0.44-GCC-5.4.0-2.26
 module load libs/cudnn/5.1-cuda-8.0
 module load languages/anaconda3/3.7
 
-source activate dog-project-pip_1.2.1
-export PATH=$HOME/.conda/envs/dog-project-pip_1.2.1/bin:$PATH
+source activate keras_gpu_pip_alt
+export PATH=$HOME/.conda/envs/keras_gpu_pip_alt/bin:$PATH
 
 
 
