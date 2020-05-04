@@ -83,5 +83,5 @@ if __name__ == '__main__':
     # p_test_propagator.process(output_path)
 
     p_propagator_img = PipePropagateOnImg(follow_up_data, scannet_data, opt.json_conf_execution_file, mask_width=224,
-                                          mask_height=224, stride=100, visualize=False)
+                                          mask_height=224, stride=10, visualize=False)
     p_propagator_img.process(output_path)
