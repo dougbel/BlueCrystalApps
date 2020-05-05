@@ -72,7 +72,7 @@ if __name__ == '__main__':
     #
     # ##### -------------------------------------------------------------------------------------------------- #######
     p_test_propagate = PipeCalculatePropagator(follow_up_data, scannet_data, opt.interactions_path,
-                                               opt.json_conf_execution_file)
+                                               opt.json_conf_execution_file, include_collision = False )
     p_test_propagate.process(output_path)
     #
     # p_test_propagate = PipeCalculatePropagator_Restricted(follow_up_data, scannet_data, opt.interactions_path, opt.json_conf_execution_file)
