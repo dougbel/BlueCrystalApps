@@ -1,12 +1,11 @@
 #!/bin/bash
 
-#SBATCH --job-name=sit
-#SBATCH --requeue
+#SBATCH --job-name=sitting_rgb
 #SBATCH --partition=cpu
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=14
-#SBATCH --time=1-08:00:00
+#SBATCH --time=20:00:00
 #SBATCH --mem=32G
 #SBATCH --mail-type=ALL
 #SBATCH --array=0-23
@@ -19,9 +18,4 @@ source activate trimesh
 export PATH=$HOME/.conda/envs/trimesh/bin:$PATH
 export PYTHONPATH=/mnt/storage/home/csapo/git_repositories/iTpy:/mnt/storage/home/csapo/git_repositories/si:\$PYTHONPATH
 
-SCANS_DIR=/mnt/storage/scratch/csapo/ScanNet/scans
-OUTPUT_DIR=/mnt/storage/scratch/csapo/ScanNet_parallel_analysis
-TRAINED_ITER_DIR=/mnt/storage/scratch/csapo/descriptors_repository/IBSMesh_400_4_OnGivenPointCloudWeightedSampler_5_500
-JSON_EXEC_FILE=/mnt/storage/home/csapo/projects/05_scannet_work_distribution/01_rgb_propagation_sitting/sitting_testing.json
-
-srun python prop_and_rgb.py --dataset_scans_path $SCANS_DIR --output_path $OUTPUT_DIR --interactions_path $TRAINED_ITER_DIR --json_conf_execution_file $JSON_EXEC_FILE
+srun python only_pipe_propagate_on_img.py --dataset_scans_path /mnt/storage/scratch/csapo/ScanNet/scans --output_path /mnt/storage/scratch/csapo/ScanNet_parallel_analysis --interactions_path /mnt/storage/scratch/csapo/descriptors_repository/IBSMesh_400_4_OnGivenPointCloudWeightedSampler_5_500 --json_conf_execution_file /mnt/storage/home/csapo/projects/05_scannet_work_distribution/01_rgb_propagation_sitting/sitting_testing.json
