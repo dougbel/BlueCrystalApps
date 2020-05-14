@@ -1,0 +1,24 @@
+{
+  "parameters":{
+    "num_orientations": 8,
+    "num_pv": 512,
+    "sample_on_test": 50,
+    "Debug": 1,
+    "Descriptor":  13,
+    "VectorDiff":  40,
+    "LocalResponse":  0,
+    "PredictionT":  50
+  },
+  "interactions":[
+    {"affordance_name":"laying","object_name":"human_laying"},
+    {"affordance_name":"child_laying","object_name":"child_laying"},
+    {"affordance_name":"reaching_out_low","object_name":"human_reaching_out_low"},
+    {"affordance_name":"reaching_out_mid_low","object_name":"human_reaching_out_mid_low"},
+    {"affordance_name":"reaching_out_mid_up","object_name":"human_reaching_out_mid_up"},
+    {"affordance_name":"reaching_out_up","object_name":"human_reaching_out_up"},
+    {"affordance_name":"hanging_umbrella","object_name":"umbrella"},
+    {"affordance_name":"placing_large_box","object_name":"large_box"},
+    {"affordance_name":"placing_small_box","object_name":"small_box"}
+  ]
+  
+}
