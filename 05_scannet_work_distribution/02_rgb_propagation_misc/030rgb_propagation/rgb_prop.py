@@ -64,8 +64,7 @@ if __name__ == '__main__':
     else:
         follow_up_data = pd.read_csv(follow_up_file, index_col=0)
 
-
     # ##### -------------------------------------------------------------------------------------------------- #######
-    p_test_propagate = PipeCalculatePropagator(follow_up_data, scannet_data, opt.interactions_path,
-                                               opt.json_conf_execution_file, include_collision = False )
-    p_test_propagate.process(output_path)
+    p_propagator_img = PipePropagateOnImg(follow_up_data, scannet_data, opt.json_conf_execution_file, mask_width=224,
+                                          mask_height=224, stride=10, visualize=False)
+    p_propagator_img.process(output_path)

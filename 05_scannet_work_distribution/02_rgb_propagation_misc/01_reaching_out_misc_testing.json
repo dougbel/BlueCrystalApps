@@ -1,0 +1,18 @@
+{
+  "parameters":{
+    "num_orientations": 8,
+    "num_pv": 512,
+    "sample_on_test": 50,
+    "Debug": 1,
+    "Descriptor":  13,
+    "VectorDiff":  40,
+    "LocalResponse":  0,
+    "PredictionT":  50
+  },
+  "interactions":[
+    {"affordance_name":"reaching_out_low","object_name":"human_reaching_out_low"},
+    {"affordance_name":"reaching_out_mid_low","object_name":"human_reaching_out_mid_low"},
+    {"affordance_name":"reaching_out_mid_up","object_name":"human_reaching_out_mid_up"},
+    {"affordance_name":"reaching_out_up","object_name":"human_reaching_out_up"}
+  ]
+}
