@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=cprop
+#SBATCH --job-name=p_reachn
 #SBATCH --requeue
-#SBATCH --partition=cpu
+#SBATCH --partition=serial_verylong
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=14
-#SBATCH --time=2-08:00:00
+#SBATCH --cpus-per-task=4
+#SBATCH --time=4-12:00:00
 #SBATCH --mem=32G
 #SBATCH --mail-type=ALL
 #SBATCH --array=0-23

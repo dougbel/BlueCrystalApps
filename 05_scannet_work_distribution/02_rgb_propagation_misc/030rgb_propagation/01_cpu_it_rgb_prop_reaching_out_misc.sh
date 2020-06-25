@@ -1,15 +1,14 @@
 #!/bin/bash
 
-#SBATCH --job-name=rgb
+#SBATCH --job-name=rgb_re_n
 #SBATCH --requeue
-#SBATCH --partition=cpu
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=14
-#SBATCH --time=1-12:00:00
+#SBATCH --cpus-per-task=28
+#SBATCH --time=20:00:00
 #SBATCH --mem=32G
 #SBATCH --mail-type=ALL
-#SBATCH --array=0-23
+#SBATCH --array=1,22
 
 module load CUDA/8.0.44-GCC-5.4.0-2.26
 module load libs/cudnn/5.1-cuda-8.0
