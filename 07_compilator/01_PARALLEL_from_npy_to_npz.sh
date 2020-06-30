@@ -5,7 +5,7 @@
 #SBATCH --partition=cpu
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=12
+#SBATCH --cpus-per-task=14
 #SBATCH --time=20:00:00
 #SBATCH --mem=32G
 #SBATCH --mail-type=ALL
