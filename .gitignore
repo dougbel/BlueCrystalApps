@@ -20,3 +20,5 @@
 07_compilator/output/
 
 07_compilator/outputs/
+
+*.log
