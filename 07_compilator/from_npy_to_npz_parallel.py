@@ -30,7 +30,11 @@ def compress_npy_files_in_a_path(input_path, output_path, output_file_name):
     # Compressing files
     ordered_dict = collections.OrderedDict()
     for file_name in file_names:
-        ordered_dict[file_name] = np.load(os.path.join(input_path, file_name))
+        try:
+            ordered_dict[file_name] = np.load(os.path.join(input_path, file_name))
+        except:
+            logging.error(file_name + " Bad npy file (ValueError: total size of new array must be unchanged)")
+            print(file_name + " Bad npy file (ValueError: total size of new array must be unchanged)")
     # from 585 MB to 266 MB
     output_file = os.path.join(output_path, output_file_name)
 
@@ -48,21 +52,25 @@ def verify_data_integrity_between_compression_and_npy_data(input_path, npz_file_
         data_from_file = np.load(os.path.join(input_path, key))
         if not np.all(data_from_file == data_compiled[key]):
             logging.error("Difference between compressed data and npy files ")
-            sys.exit("Difference between compressed data and npy files ")
+            print("Difference between compressed data and npy files ")
+            return False
     logging.info("SUCCESS: compressed data and files are equals")
 
     # number of files is equal to the number in compressed data
     if len(file_names) != len(data_compiled.keys()):
         logging.error("Difference between number of compressed arrays and npy files ")
-        sys.exit("Difference between number of compressed arrays and npy files ")
+        print("Difference between number of compressed arrays and npy files ")
+        return False
     logging.info("SUCCESS: number of compressed numpy array and files are equals")
+    return True
 
 def compress_to_npz_and_remove_npy_files(input_path, npz_file_name):
     list_npy_files = list_npy_file(input_path)
     if len(list_npy_files)>0:
         compress_npy_files_in_a_path(input_path, input_path, npz_file_name)
-        verify_data_integrity_between_compression_and_npy_data(input_path, input_path, npz_file_name)
-        [os.remove(os.path.join(input_path, file)) for file in list_npy_files]
+        verified = verify_data_integrity_between_compression_and_npy_data(input_path, input_path, npz_file_name)
+        if verified is True:
+            [os.remove(os.path.join(input_path, file)) for file in list_npy_files]
 
 
 parser = argparse.ArgumentParser()
@@ -79,7 +87,7 @@ if __name__ == "__main__":
     src_path = opt.src_path
     npz_file_name = "scores_1.npz"
     for task_path in tqdm(os.listdir(src_path), desc="tasks"):
-        path = os.path.join(src_path,task_path)
+        path = os.path.join(src_path, task_path)
         # list of files in path
         if os.path.isdir(path):
             imgs_paths = [os.path.join(path, sub_path) for sub_path in os.listdir(path) if
