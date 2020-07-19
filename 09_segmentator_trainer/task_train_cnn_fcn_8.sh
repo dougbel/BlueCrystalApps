@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=resne_50
-#SBATCH --partition=gpu_veryshort
+#SBATCH --job-name=fcn_8
+#SBATCH --partition=gpu
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=14
 #SBATCH --gres=gpu:1
-#SBATCH --time=0:59:00
+#SBATCH --time=1-11:59:00
 #SBATCH --mem=32G
 #SBATCH --mail-type=ALL
 
@@ -18,4 +18,4 @@ module load languages/anaconda3/3.7
 source activate keras_gpu
 export PATH=$HOME/.conda/envs/keras_gpu/bin:$PATH
 
-srun python train_cnn_fcn_resnet_50.py
+srun python train_cnn_fcn_8.py
