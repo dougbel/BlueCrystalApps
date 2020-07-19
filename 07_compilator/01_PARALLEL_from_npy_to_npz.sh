@@ -21,3 +21,7 @@ export PYTHONPATH=/mnt/storage/home/csapo/git_repositories/iTpy:/mnt/storage/hom
 
 
 srun python PARALLEL_from_npy_to_npz_parallel.py --src_path /mnt/storage/home/csapo/scratch/ScanNet_parallel_analysis_misc
+
+
+
+# This file was used to compress npy files to npz files to do a faster transfer if files from BC4 to my personal desktop
