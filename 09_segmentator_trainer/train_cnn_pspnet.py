@@ -4,7 +4,6 @@ from keras_segmentation.models.pspnet import pspnet_50
 from keras_segmentation.models.fcn import fcn_8_resnet50
 
 if __name__ == "__main__":
-
     checkpoint_path = "/mnt/storage/home/csapo/scratch/train_cnn/checkpoints/psp_net/psp_net"
 
     train_images = "/mnt/storage/home/csapo/scratch/train_cnn/imgs/train_images/"
@@ -25,15 +24,24 @@ if __name__ == "__main__":
     transfer_weights(pretrained_model, new_model)  # transfer weights from pre-trained model to your model
 
     new_model.train(
+        checkpoints_path=checkpoint_path,
+        auto_resume_checkpoint=False,
+        ignore_zero_class=False,
+        verify_dataset=False,
+
+        validate=True,  # change to false if dont want to validate
+        val_images=val_images,
+        val_annotations=annotated_val_images,
+        val_batch_size=4,
+        val_steps_per_epoch=5236,  # total number of VALIDATION data (20942) divided by the batch size
+
         train_images=train_images,
         train_annotations=annotated_train_images,
         input_height=input_height,
         input_width=input_width,
-        checkpoints_path=checkpoint_path,
-        verify_dataset=True,
         epochs=5,
         batch_size=4,
-        steps_per_epoch=60778 #total number of training data points() divided by the batch size
+        steps_per_epoch=60778  # total number of TRAINING data points(243109) divided by the batch size
     )
 
     # out = model.predict_segmentation(
@@ -47,5 +55,3 @@ if __name__ == "__main__":
 
     # evaluating the model
     print(new_model.evaluate_segmentation(inp_images_dir=val_images, annotations_dir=annotated_val_images))
-
-

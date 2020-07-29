@@ -22,3 +22,7 @@
 07_compilator/outputs/
 
 *.log
+
+03_dog-project/.vscode/
+
+.idea/

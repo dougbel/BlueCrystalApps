@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$" />
     <content url="file://$MODULE_DIR$/../../../git_repositories/my_projects/iTpy" />
     <content url="file://$MODULE_DIR$/../../../git_repositories/my_projects/si" />
-    <orderEntry type="jdk" jdkName="Python 3.7 (trimesh)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.6 (keras_gpu_segmentation)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
