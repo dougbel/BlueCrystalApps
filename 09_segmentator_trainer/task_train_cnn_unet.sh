@@ -17,5 +17,6 @@ module load languages/anaconda3/3.7
 
 source activate keras_gpu
 export PATH=$HOME/.conda/envs/keras_gpu/bin:$PATH
+export PYTHONPATH=/mnt/storage/home/csapo/git_repositories/keras_segmentation:\$PYTHONPATH
 
 srun python train_cnn_unet.py

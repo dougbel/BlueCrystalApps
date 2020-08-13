@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #SBATCH --job-name=segnet
-#SBATCH --partition=gpu
+#SBATCH --partition=gpu_veryshort
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=14
 #SBATCH --gres=gpu:1
-#SBATCH --time=23:59:00
+#SBATCH --time=0:59:00
 #SBATCH --mem=32G
 #SBATCH --mail-type=ALL
 
@@ -17,5 +17,6 @@ module load languages/anaconda3/3.7
 
 source activate keras_gpu
 export PATH=$HOME/.conda/envs/keras_gpu/bin:$PATH
+export PYTHONPATH=/mnt/storage/home/csapo/git_repositories/keras_segmentation:\$PYTHONPATH
 
 srun python train_cnn_segnet.py
