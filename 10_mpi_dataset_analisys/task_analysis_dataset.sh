@@ -1,12 +1,11 @@
 #!/bin/bash
 
 #SBATCH --job-name=mpi_an
-#SBATCH --partition=test
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=6
-#SBATCH --cpus-per-task=4
-#SBATCH --time=00:10:00
-#SBATCH --mem=16G
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=9
+#SBATCH --cpus-per-task=2
+#SBATCH --time=02:00:00
+#SBATCH --mem=32G
 #SBATCH --mail-type=ALL
 
 module load OpenMPI/2.0.1-gcccuda-2016.10

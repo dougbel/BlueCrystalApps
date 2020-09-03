@@ -48,18 +48,26 @@ class MyApp(object):
         tuples_all = list(itertools.product(l_inter, l_scans))
 
         if os.path.isfile(os.path.join(os.getcwd(), 'file_name.csv')):
-            df = pd.read_csv(os.path.join(os.getcwd(), 'file_name.csv'))
-            tuples_ready = df.drop_duplicates(['interaction', 'scan'])[['interaction', 'scan']].values.tolist()
-            l_task = [t for t in tuples_all if t not in tuples_ready]
+            df = pd.read_csv(os.path.join(os.getcwd(), 'file_name.csv'), index_col=0)
+            tuples_ready = [tuple(r) for r in
+                            df.drop_duplicates(['interaction', 'scan'])[['interaction', 'scan']].values]
+            l_task = [t for t in tuples_all if tuple(t) not in tuples_ready]
+            print("Work to process, all: ", len(tuples_all), ", done: ", len(tuples_ready), ", pending: ", len(l_task))
         else:
             df = pd.DataFrame(columns=['interaction', 'scan', 'num_frame', 'n_t', 'n_p', 'n_n'])
             l_task = tuples_all
+            print("Work to process, all: ", len(tuples_all), ", done: 0, pending: ", len(l_task))
 
         data = [(self.input_path,) + data for data in l_task]
 
         for d in data:
             # 'data' will be passed to the slave and can be anything
             self.work_queue.add_work(data=d)
+
+        #
+        # Used to measure time on processing and backup progress
+        #
+        time_last_backup = time.time()
 
         #
         # Keeep starting slaves as long as there is work to do
@@ -75,17 +83,29 @@ class MyApp(object):
             # reclaim returned data from completed slaves
             #
             for slave_return_data in self.work_queue.get_completed_work():
-                done, partial_df,  message = slave_return_data
+                done, partial_df, message = slave_return_data
                 if done:
                     print('Master: slave finished its task and says "%s"' % message)
                     df = df.append(partial_df, ignore_index=True)
-                    if os.path.isfile(os.path.join(os.getcwd(), 'file_name.csv')):
-                        copyfile(os.path.join(os.getcwd(), 'file_name.csv'),
-                                 os.path.join(os.getcwd(), 'tmp_file_name.csv'))
-                    df.to_csv(os.path.join(os.getcwd(), 'file_name.csv'))
+                    #
+                    # backup to files every 5 minutes
+                    #
+                    if (time.time() - time_last_backup) > (5 * 60):
+                        print("backing up")
+                        self.backup_progress(df)
+                        time_last_backup = time.time()
 
             # sleep some time
             time.sleep(0.3)
+
+        self.backup_progress(df)
+
+    @staticmethod
+    def backup_progress(df):
+        if os.path.isfile(os.path.join(os.getcwd(), 'file_name.csv')):
+            copyfile(os.path.join(os.getcwd(), 'file_name.csv'),
+                     os.path.join(os.getcwd(), 'tmp_file_name.csv'))
+        df.to_csv(os.path.join(os.getcwd(), 'file_name.csv'))
 
 
 class MySlave(Slave):
@@ -103,7 +123,7 @@ class MySlave(Slave):
         name = MPI.Get_processor_name()
         input_dir, interaction, scan = data
         data_dir = os.path.join(input_dir, interaction + '_img_segmentation_w224_x_h224', scan)
-        print('  Slave %s rank %d EXECUTING it:"%s", scan: "%s"' % (name, rank, interaction, scan))
+        # print('  Slave %s rank %d EXECUTING it:"%s", scan: "%s"' % (name, rank, interaction, scan))
         data_compiled = np.load(os.path.join(data_dir, "scores_1.npz"))
         df = pd.DataFrame(columns=['interaction', 'scan', 'num_frame', 'n_t', 'n_p', 'n_n'])
         for key in data_compiled.keys():
