@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #SBATCH --job-name=mpi4py_test
-#SBATCH --partition=test
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=2
