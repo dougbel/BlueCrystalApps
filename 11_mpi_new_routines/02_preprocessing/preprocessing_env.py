@@ -3,7 +3,7 @@ import argparse
 from mpi4py import MPI
 
 from mpi_routines.master import MasterRoutines
-from mpi_routines.slaves.slave_sampler import SlaveSampler
+from mpi_routines.slaves.slave_filler import SlaveFiller
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset_scans_path', required=True, help='Path to ScanNet dataset')
@@ -23,12 +23,12 @@ if __name__ == "__main__":
 
     if rank == 0:  # Master
 
-        app = MasterRoutines(slaves=range(1, size), work_directory=opt.work_directory, follow_up_column="env_sampled")
+        app = MasterRoutines(slaves=range(1, size), work_directory=opt.work_directory, follow_up_column="env_filled")
         app.run()
         app.terminate_slaves()
 
     else:  # Any slave
 
-        SlaveSampler(dataset_scans_path=opt.dataset_scans_path, work_directory=opt.work_directory).run()
+        SlaveFiller(dataset_scans_path=opt.dataset_scans_path, work_directory=opt.work_directory).run()
 
     print('Task completed (rank %d)' % (rank))
