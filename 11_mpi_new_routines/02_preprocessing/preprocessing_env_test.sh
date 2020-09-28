@@ -1,12 +1,11 @@
 #!/bin/bash
 
-#SBATCH --job-name=mpi_fill
-# !SBATCH --no-requeue
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=2
-#SBATCH --cpus-per-task=4
-#SBATCH --time=02:00:00
-#SBATCH --mem=32G
+#SBATCH --job-name=mpiFillt
+#SBATCH --nodes=8
+#SBATCH --ntasks-per-node=3
+#SBATCH --cpus-per-task=8
+#SBATCH --time=01:00:00
+#SBATCH --mem=96G
 #SBATCH --mail-type=ALL
 
 module load OpenMPI/2.0.1-gcccuda-2016.10
