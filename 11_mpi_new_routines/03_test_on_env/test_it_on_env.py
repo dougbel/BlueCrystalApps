@@ -2,7 +2,7 @@ import argparse
 
 from mpi4py import MPI
 
-from mpi_routines.master import MasterTestInteractionEnv
+from mpi_routines.master import MasterMultiRoutines
 from mpi_routines.slaves.slave_enviro_tester import SlaveEnviroTester
 
 parser = argparse.ArgumentParser()
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     print('***************************************************************************')
 
     if rank == 0:  # Master
-        app = MasterTestInteractionEnv(slaves=range(1, size),
+        app = MasterMultiRoutines(slaves=range(1, size),
                                        work_directory=opt.work_directory,
                                        prefix_follow_up_column="env_test",
                                        json_conf_execution_file=opt.json_conf_execution_file)
