@@ -22,4 +22,4 @@ WORKING_DIRECTORY=/mnt/storage/scratch/csapo/analisys/mpi_routines/train
 JSON_EXEC_FILE=/mnt/storage/home/csapo/scratch/analisys/mpi_routines/configs/json_execution/single_testing_sitting.json
 PROPAGATORS_DIR=/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train/propagators
 
-srun --mpi=pmi2 python propagate_on_rgb.py --dataset_scans_path  $SCANS_DIR --work_directory $WORKING_DIRECTORY --json_conf_execution_file $JSON_EXEC_FILE  --propagators_directory $PROPAGATORS_DIR
+srun --mpi=pmi2 python propagate_on_frames.py --dataset_scans_path  $SCANS_DIR --work_directory $WORKING_DIRECTORY --json_conf_execution_file $JSON_EXEC_FILE  --propagators_directory $PROPAGATORS_DIR

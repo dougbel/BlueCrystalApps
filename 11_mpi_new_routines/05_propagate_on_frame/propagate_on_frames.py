@@ -3,7 +3,7 @@ import argparse
 from mpi4py import MPI
 
 from mpi_routines.master import MasterMultiRoutines
-from mpi_routines.slaves.slave_propagate_on_images import SlavePropagateOnRGBImages
+from mpi_routines.slaves.slave_propagate_on_frames import SlavePropagateOnFrames
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset_scans_path', required=True, help='Path to ScanNet dataset')
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     else:  # Any slave
 
-        SlavePropagateOnRGBImages(dataset_scans_path=opt.dataset_scans_path,
+        SlavePropagateOnFrames(dataset_scans_path=opt.dataset_scans_path,
                                   work_directory=opt.work_directory,
                                   propagators_directory=opt.propagators_directory,
                                   json_conf_execution_file=opt.json_conf_execution_file).run()
