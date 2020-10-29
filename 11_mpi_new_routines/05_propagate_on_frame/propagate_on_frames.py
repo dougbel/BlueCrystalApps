@@ -27,7 +27,7 @@ if __name__ == "__main__":
     if rank == 0:  # Master
         app = MasterMultiRoutines(slaves=range(1, size),
                                   work_directory=opt.work_directory,
-                                  prefix_follow_up_column="rgb_prop",
+                                  prefix_follow_up_column="frame_prop",
                                   json_conf_execution_file=opt.json_conf_execution_file)
         app.run()
         app.terminate_slaves()
@@ -35,8 +35,8 @@ if __name__ == "__main__":
     else:  # Any slave
 
         SlavePropagateOnFrames(dataset_scans_path=opt.dataset_scans_path,
-                                  work_directory=opt.work_directory,
-                                  propagators_directory=opt.propagators_directory,
-                                  json_conf_execution_file=opt.json_conf_execution_file).run()
+                               work_directory=opt.work_directory,
+                               propagators_directory=opt.propagators_directory,
+                               json_conf_execution_file=opt.json_conf_execution_file).run()
 
     print('Task completed (rank %d)' % (rank))
