@@ -3,7 +3,7 @@
 #SBATCH --job-name=plaboxtr
 #SBATCH --exclude=compute418
 #SBATCH --nodes=12
-#SBATCH --ntasks-per-node=2
+#SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=14
 #SBATCH --exclusive
 #SBATCH --time=1-12:00:00

@@ -2,9 +2,9 @@
 
 #SBATCH --job-name=romte
 #SBATCH --partition=veryshort
-#SBATCH --nodes=12
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=14
+#SBATCH --nodes=8
+#SBATCH --ntasks-per-node=3
+#SBATCH --cpus-per-task=8
 #SBATCH --exclusive
 #SBATCH --time=5:00:00
 #SBATCH --mem=96G
