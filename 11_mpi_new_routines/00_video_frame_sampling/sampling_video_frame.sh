@@ -2,7 +2,7 @@
 
 #SBATCH --job-name=vidsam
 #SBATCH --partition=veryshort
-#SBATCH --nodes=5
+#SBATCH --nodes=8
 #SBATCH --ntasks-per-node=3
 #SBATCH --cpus-per-task=8
 #SBATCH --time=01:00:00
