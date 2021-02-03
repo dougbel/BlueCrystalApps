@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=romtr
+#SBATCH --job-name=rouptr
 #SBATCH --partition=veryshort
 #SBATCH --exclude=compute418
 #SBATCH --nodes=3
@@ -19,7 +19,7 @@ source activate $PREFIX_ENV
 export PATH=$PREFIX_ENV/bin:$PATH
 export PYTHONPATH=/mnt/storage/home/csapo/git_repositories/iTpy:/mnt/storage/home/csapo/git_repositories/iTpyClearance:/mnt/storage/home/csapo/git_repositories/mpi-master-slave:/mnt/storage/home/csapo/git_repositories/mpi_routines:/mnt/storage/home/csapo/git_repositories/mpi_routines:/mnt/storage/home/csapo/git_repositories/si:\$PYTHONPATH
 
-JSON_EXEC_FILE=/mnt/storage/scratch/csapo/analisys/mpi_routines/configs/json_execution/multiple_reaching_out_mid.json
+JSON_EXEC_FILE=/mnt/storage/scratch/csapo/analisys/mpi_routines/configs/json_execution/single_testing_reaching_out_up.json
 
 SCANS_DIR=/mnt/storage/scratch/csapo/ScanNet/scans
 TRAINED_ITER_DIR=/mnt/storage/scratch/csapo/analisys/mpi_routines/configs/descriptor_repository

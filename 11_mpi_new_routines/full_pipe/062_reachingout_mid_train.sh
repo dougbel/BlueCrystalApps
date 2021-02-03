@@ -1,13 +1,12 @@
 #!/bin/bash
 
 #SBATCH --job-name=romtr
-#SBATCH --partition=veryshort
 #SBATCH --exclude=compute418
-#SBATCH --nodes=3
-#SBATCH --ntasks-per-node=8
-#SBATCH --cpus-per-task=3
+#SBATCH --nodes=20
+#SBATCH --ntasks-per-node=2
+#SBATCH --cpus-per-task=14
 #SBATCH --exclusive
-#SBATCH --time=2:00:00
+#SBATCH --time=1-20:00:00
 #SBATCH --mem=96G
 #SBATCH --mail-type=ALL
 
@@ -29,6 +28,14 @@ WORKING_DIRECTORY=/mnt/storage/scratch/csapo/analisys/mpi_routines/train
 TEST_RESULTS_DIR=/mnt/storage/scratch/csapo/analisys/mpi_routines/train/env_test
 PROPAGATORS_DIR=/mnt/storage/scratch/csapo/analisys/mpi_routines/train/propagators
 
+echo "Testing environment"
+srun --mpi=pmi2 python ../03_test_on_env/test_it_on_env.py --work_directory $WORKING_DIRECTORY --dataset_scans_path  $SCANS_DIR --descriptors_repository $TRAINED_ITER_DIR --json_conf_execution_file $JSON_EXEC_FILE
 
-echo "Analysis"
-srun --mpi=pmi2 python ../06_data_analyser/analyze_data.py --work_directory $WORKING_DIRECTORY
+echo "Calculating propagators"
+srun --mpi=pmi2 python ../04_calculate_propagators/calculate_propagator.py --work_directory $WORKING_DIRECTORY --json_conf_execution_file $JSON_EXEC_FILE  --test_result_directory $TEST_RESULTS_DIR --conf_propagators_repository $JSON_PROPAGATORS_DIR
+
+echo "Propagating on samples"
+srun --mpi=pmi2 python ../04_propagate_on_samples/propagate_on_samples.py --work_directory $WORKING_DIRECTORY --json_conf_execution_file $JSON_EXEC_FILE
+
+echo "Propagating on frames"
+srun --mpi=pmi2 python ../05_propagate_on_frame/propagate_on_frames.py --dataset_scans_path  $SCANS_DIR --work_directory $WORKING_DIRECTORY --json_conf_execution_file $JSON_EXEC_FILE  --propagators_directory $PROPAGATORS_DIR
