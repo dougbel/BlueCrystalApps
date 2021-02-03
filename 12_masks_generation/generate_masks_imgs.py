@@ -1,3 +1,13 @@
+"""
+Script used to generate masks with format png to train a neural network using KERAS
+By now it only generates the first affordances associates with the set 
+ 
+     interaction_set possible values:
+     ["all", "reaching_out", "laying", "basic_human_inter", "good_human_inter", "placing_boxes"]
+                                              bhi                  ghi
+
+"""
+
 import argparse
 import logging
 import os
@@ -84,7 +94,7 @@ class MasterMasksGenerationImgs(object):
         self.interactions_set = interactions_set
         self.output_dir = output_dir
 
-        logging_file = os.path.join(analysis_intersections_dir, 'process_masks_generation.log')
+        logging_file = os.path.join(analysis_intersections_dir, 'process_masks_generation_imgs.log')
         logging.basicConfig(filename=logging_file, filemode='a', level=logging.INFO,
                             format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
 
@@ -116,6 +126,12 @@ class MasterMasksGenerationImgs(object):
         # but it can also be added later as more work become available
         #
         interactions = get_interactions_name_in_subgroup(self.interactions_set)
+
+        # created for getting just one interaction (the first one)
+        output_subpath = f"{dir_output_masks}/{interactions[0]}"
+        if not os.path.exists(output_subpath):
+            os.makedirs(output_subpath)
+
         full_analysis_dir = f"{self.analysis_intersections_dir}/data_{self.stage}/{self.analysis_intersection_percentages}/coincidences_analysis"
         analysis_file = f"{full_analysis_dir}/{self.interactions_set}/{interactions[0]}_1to100.xlsx"
 
@@ -189,15 +205,14 @@ class SlaveMasksGeneration(Slave):
         try:
             # extracting image frame in PNG
             interaction = self.interactions[0]
-            sub_path = os.path.join(self.full_dir_data, "frame_propagation", scene, f"{interaction}_img_segmentation_w224_x_h224")
+            sub_path = os.path.join(self.full_dir_data, "frame_propagation", scene,
+                                    f"{interaction}_img_segmentation_w224_x_h224")
             data_compiled = np.load(os.path.join(sub_path, "scores_1.npz"))
             scores = data_compiled[f"image_frame_{frame}_scores_1.npy.npy"]
 
             ann_img = np.zeros((224, 224, 3)).astype('uint8')
             ann_img[np.where(scores > self.threshold)] = 1
             output_subpath = os.path.join(self.dir_output_masks_imgs, interaction)
-            if not os.path.exists(output_subpath):
-                os.makedirs(output_subpath)
             file = os.path.join(output_subpath, scene + str(frame).zfill(4) + '.png')
             im = fromarray(ann_img)
             im.save(file)
