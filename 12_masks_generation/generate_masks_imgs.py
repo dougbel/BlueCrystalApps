@@ -114,26 +114,32 @@ class MasterMasksGenerationImgs(object):
         """
         dir_output = f"{self.output_dir}/{self.interactions_set}"
         dir_output_images = f"{dir_output}/{self.stage}_images"
-        dir_output_masks = f"{dir_output}/annotation_{self.stage}_images_imgs"
 
         if not os.path.exists(dir_output_images):
             os.makedirs(dir_output_images)
+
+        dir_output_masks = f"{dir_output}/annotation_{self.stage}_images_imgs"
         if not os.path.exists(dir_output_masks):
             os.makedirs(dir_output_masks)
+
+        interactions = get_interactions_name_in_subgroup(self.interactions_set)
+
+        # created for getting for all interactions
+        for pos in range(len(interactions)):
+            output_subpath = f"{dir_output_masks}/{interactions[pos]}"
+            if not os.path.exists(output_subpath):
+                os.makedirs(output_subpath)
 
         #
         # let's prepare our work queue. This can be built at initialization time
         # but it can also be added later as more work become available
         #
-        interactions = get_interactions_name_in_subgroup(self.interactions_set)
 
-        # created for getting just one interaction (the first one)
-        output_subpath = f"{dir_output_masks}/{interactions[0]}"
-        if not os.path.exists(output_subpath):
-            os.makedirs(output_subpath)
+        #only consider the first interactions analysis
+        pivot_interaction = interactions[0]
 
         full_analysis_dir = f"{self.analysis_intersections_dir}/data_{self.stage}/{self.analysis_intersection_percentages}/coincidences_analysis"
-        analysis_file = f"{full_analysis_dir}/{self.interactions_set}/{interactions[0]}_1to100.xlsx"
+        analysis_file = f"{full_analysis_dir}/{self.interactions_set}/{pivot_interaction}_1to100.xlsx"
 
         df_coincidences = pd.read_excel(analysis_file, sheet_name='Coincidences_0', index_col=0)
         l_coincidences = df_coincidences.values.tolist()
@@ -204,18 +210,23 @@ class SlaveMasksGeneration(Slave):
         scene, frame = data
         try:
             # extracting image frame in PNG
-            interaction = self.interactions[0]
-            sub_path = os.path.join(self.full_dir_data, "frame_propagation", scene,
-                                    f"{interaction}_img_segmentation_w224_x_h224")
-            data_compiled = np.load(os.path.join(sub_path, "scores_1.npz"))
-            scores = data_compiled[f"image_frame_{frame}_scores_1.npy.npy"]
 
-            ann_img = np.zeros((224, 224, 3)).astype('uint8')
-            ann_img[np.where(scores > self.threshold)] = 1
-            output_subpath = os.path.join(self.dir_output_masks_imgs, interaction)
-            file = os.path.join(output_subpath, scene + str(frame).zfill(4) + '.png')
-            im = fromarray(ann_img)
-            im.save(file)
+            for pos in range(len(self.interactions)):
+                interaction = self.interactions[pos]
+
+                output_subpath = os.path.join(self.dir_output_masks_imgs, interaction)
+                file = os.path.join(output_subpath, scene + str(frame).zfill(4) + '.png')
+
+                if not os.path.exists(file):
+                    sub_path = os.path.join(self.full_dir_data, "frame_propagation", scene,
+                                            f"{interaction}_img_segmentation_w224_x_h224")
+                    data_compiled = np.load(os.path.join(sub_path, "scores_1.npz"))
+                    scores = data_compiled[f"image_frame_{frame}_scores_1.npy.npy"]
+
+                    ann_img = np.zeros((224, 224, 3)).astype('uint8')
+                    ann_img[np.where(scores > self.threshold)] = 1
+                    im = fromarray(ann_img)
+                    im.save(file)
 
             return True, scene, frame, self.name, self.rank, ""
         except:
