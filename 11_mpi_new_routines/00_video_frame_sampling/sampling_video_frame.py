@@ -32,7 +32,7 @@ if __name__ == "__main__":
     print('***************************************************************************')
 
     if rank == 0:  # Master
-        follow_up_column = "frame_img_samplings_w" + opt.width + "h" + opt.height + "s" + opt.stride
+        follow_up_column = "frame_img_samplings_w" + opt.width + "h" + opt.height + "s" + opt.stride+"png"
 
         app = MasterRoutines(slaves=range(1, size), work_directory=opt.work_directory, follow_up_column=follow_up_column)
         app.run()
