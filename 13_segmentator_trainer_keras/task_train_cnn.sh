@@ -19,8 +19,8 @@ source activate keras_gpu
 export PATH=$HOME/.conda/envs/keras_gpu/bin:$PATH
 export PYTHONPATH=/mnt/storage/home/csapo/git_repositories/keras_segmentation:\$PYTHONPATH
 
-# srun python train_cnn --interaction child_laying_child_laying --architecture segnet
-# srun python train_cnn --interaction child_laying_child_laying --architecture unet
+# srun python train_cnn.py --interaction child_laying_child_laying --architecture segnet
+# srun python train_cnn.py --interaction child_laying_child_laying --architecture unet
 
 srun python train_cnn.py --interaction laying_human_laying --architecture segnet
 srun python train_cnn.py --interaction laying_human_laying --architecture unet
