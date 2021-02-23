@@ -166,7 +166,7 @@ class SlaveMasksGeneration(Slave):
      and calls 'Slave.run'. The Master will do the rest
      """
 
-    def __init__(self, scannet_analysis_dir, stage, interactions_set, output_dir):
+    def __init__(self, scannet_analysis_dir, analysis_intersection_percentages, stage, interactions_set, output_dir):
         super().__init__()
         # This threshold is the same used during data analysis.
         # set originally on class mpi_routines.slavesSlaveAnalyser
@@ -174,7 +174,7 @@ class SlaveMasksGeneration(Slave):
 
         self.full_dir_data = f"{scannet_analysis_dir}/{stage}"
 
-        dir_output = f"{output_dir}/{interactions_set}"
+        dir_output = f"{output_dir}/{interactions_set}/{analysis_intersection_percentages}"
         self.dir_output_images = f"{dir_output}/{stage}_images"
         self.dir_output_masks = f"{dir_output}/annotation_{stage}_images"
 
@@ -238,6 +238,7 @@ if __name__ == "__main__":
     else:  # Any slave
 
         SlaveMasksGeneration(scannet_analysis_dir=opt.scannet_analysis_dir,
+                             analysis_intersection_percentages=opt.analysis_intersection_percentages,
                              stage=opt.stage,
                              interactions_set=opt.interactions_set,
                              output_dir=opt.output_dir).run()

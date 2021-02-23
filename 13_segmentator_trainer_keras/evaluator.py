@@ -11,6 +11,9 @@ from keras_segmentation.models.unet import unet
 parser = argparse.ArgumentParser()
 parser.add_argument('--interaction', required=True, help='Interaction to train')
 parser.add_argument('--architecture', required=True, help='Interaction to train')
+parser.add_argument('--analysis_intersection_percentages', required=True, help='1to100')
+parser.add_argument('--interactions_set', required=True, help='Indicate set of interactions to use')
+parser.add_argument('--ignore_background', required=True, help='Indicate if background is ignored during training')
 
 opt = parser.parse_args()
 
@@ -42,18 +45,21 @@ if __name__ == "__main__":
 
     interaction = opt.interaction
     architecture = opt.architecture
+    interactions_set = opt.interactions_set
+    analysis_intersection_percentages = opt.analysis_intersection_percentages
+    ignore_background = bool(opt.ignore_background)
 
     # for local test
-    # checkpoint_dir = "/media/dougbel/Tezcatlipoca/dataset_analysis/mpi_routines/train_cnn/checkpoints_ghi"
-    # test_images = "/media/dougbel/Tezcatlipoca/tmp_img_annotation/test_images"
-    # annotated_test_images = f"/media/dougbel/Tezcatlipoca/tmp/annotation_test_images_imgs/{interaction}"
+    # base_dir = "/media/dougbel/Tezcatlipoca/dataset_analysis/mpi_routines/train_cnn/checkpoints_ghi"
 
-    checkpoint_dir = "/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/checkpoints_ghi"
+    base_dir = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/{interactions_set}/{analysis_intersection_percentages}"
+    chk_name = "checkpoints_ignore_background" if ignore_background else "checkpoints"
+    checkpoint_dir = f"{base_dir}/{interactions_set}/{analysis_intersection_percentages}/{chk_name}"
     weights_dir = f"{checkpoint_dir}/{interaction}/{architecture}"
     logs_dir = f"{weights_dir}/{architecture}_logs"
 
-    test_images = "/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/good_human_inter/test_images/"
-    annotated_test_images = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/good_human_inter/annotation_test_images_imgs/{interaction}"
+    test_images = f"{base_dir}/test_images/"
+    annotated_test_images = f"{base_dir}/annotation_test_images_imgs/{interaction}"
 
     input_height = 224
     input_width = 224
@@ -64,6 +70,14 @@ if __name__ == "__main__":
         new_model = segnet(n_classes=n_classes, input_height=input_height, input_width=input_width)
     elif architecture == "unet":
         new_model = unet(n_classes=n_classes, input_height=input_height, input_width=input_width)
+    # elif architecture == "fcn_8":
+    #     new_model = fcn_8(n_classes=n_classes, input_height=input_height, input_width=input_width)
+    # elif architecture == "fcn_32_resnet50":
+    #     new_model = fcn_32_resnet50(n_classes=n_classes, input_height=input_height, input_width=input_width)
+    # elif architecture == "pspnet_50":
+    #     pretrained_model = pspnet_50_ADE_20K()
+    #     new_model = pspnet_50(n_classes=n_classes)
+    #     transfer_weights(pretrained_model, new_model)  # transfer weights from pre-trained model to your model
     else:
         print("invalid architecture")
         exit()
@@ -101,7 +115,7 @@ if __name__ == "__main__":
     data = {'Interaction': l_interaction, 'Epoch': l_epoch, 'Arquiteture': l_arquitecture, 'Train_loss': l_loss_tra,
             'Validation_loss': l_loss_val, 'Train_acc': l_acc_tra, 'Validation_acc': l_acc_val,
             'Test_frequency_weighted_IU': l_frequency_weighted_IU, 'Test_mean_IU': l_mean_IU,
-            'l_class_wise_IU_bck': l_class_wise_IU_bck, 'l_class_wise_IU_it': l_class_wise_IU_it}
+            'class wise IU bck': l_class_wise_IU_bck, 'classwise IU it': l_class_wise_IU_it}
 
     df = pd.DataFrame(data)
     df.to_excel(os.path.join(checkpoint_dir, f'{interaction}_{architecture}.xlsx'), index=False)

@@ -7,12 +7,15 @@ import tensorflow as tf
 # from keras_segmentation.models.pspnet import pspnet_50
 from keras_segmentation.models.segnet import segnet
 from keras_segmentation.models.unet import unet
+
 # from keras_segmentation.pretrained import pspnet_50_ADE_20K
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--interaction', required=True, help='Interaction to train')
 parser.add_argument('--architecture', required=True, help='Interaction to train')
-
+parser.add_argument('--analysis_intersection_percentages', required=True, help='1to100')
+parser.add_argument('--interactions_set', required=True, help='Indicate set of interactions to use')
+parser.add_argument('--ignore_background', required=True, help='Indicate if background is ignored during training')
 
 opt = parser.parse_args()
 
@@ -20,18 +23,22 @@ if __name__ == "__main__":
 
     interaction = opt.interaction
     architecture = opt.architecture
+    interactions_set = opt.interactions_set
+    analysis_intersection_percentages = opt.analysis_intersection_percentages
+    ignore_background = bool(opt.ignore_background)
 
     # to measure the quantity of GPU used
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
 
-    checkpoint_path = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/checkpoints_ghi/{interaction}/{architecture}/{architecture}"
+    base_path = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/{interactions_set}/{analysis_intersection_percentages}"
 
-    train_images = "/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/good_human_inter/train_images/"
-    annotated_train_images = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/good_human_inter/annotation_train_images_imgs/{interaction}/"
+    chk_name = "checkpoints_ignore_background" if ignore_background else "checkpoints"
 
-    val_images = "/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/good_human_inter/test_images/"
-    annotated_val_images = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/good_human_inter/annotation_test_images_imgs/{interaction}"
+    checkpoint_path = f"{base_path}/{chk_name}/{interaction}/{architecture}/{architecture}"
+
+    train_images = f"{base_path}/train_images/"
+    annotated_train_images = f"{base_path}/annotation_train_images_imgs/{interaction}/"
 
     input_height = 224
     input_width = 224
@@ -56,8 +63,6 @@ if __name__ == "__main__":
         print("invalid architecture")
         exit()
 
-
-
     new_model.train(
         checkpoints_path=checkpoint_path,
         auto_resume_checkpoint=True,
@@ -72,6 +77,3 @@ if __name__ == "__main__":
         epochs=epochs,
         batch_size=4
     )
-
-    print(f"Training {architecture} on {interaction} results after {epochs} epochs: ")
-    print(new_model.evaluate_segmentation(inp_images_dir=val_images, annotations_dir=annotated_val_images))
