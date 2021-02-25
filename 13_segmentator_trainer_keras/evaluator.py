@@ -47,19 +47,24 @@ if __name__ == "__main__":
     architecture = opt.architecture
     interactions_set = opt.interactions_set
     analysis_intersection_percentages = opt.analysis_intersection_percentages
-    ignore_background = bool(opt.ignore_background)
+    ignore_background = opt.ignore_background == 'True'
 
     # for local test
-    # base_dir = "/media/dougbel/Tezcatlipoca/dataset_analysis/mpi_routines/train_cnn/checkpoints_ghi"
+    # base = "/media/dougbel/Tezcatlipoca/dataset_analysis/mpi_routines/train_cnn"
+    base = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn"
 
-    base_dir = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/{interactions_set}/{analysis_intersection_percentages}"
+    base_dir = f"{base}/{interactions_set}/{analysis_intersection_percentages}"
     chk_name = "checkpoints_ignore_background" if ignore_background else "checkpoints"
-    checkpoint_dir = f"{base_dir}/{interactions_set}/{analysis_intersection_percentages}/{chk_name}"
+
+    checkpoint_dir = f"{base_dir}/{chk_name}"
+
     weights_dir = f"{checkpoint_dir}/{interaction}/{architecture}"
     logs_dir = f"{weights_dir}/{architecture}_logs"
 
     test_images = f"{base_dir}/test_images/"
     annotated_test_images = f"{base_dir}/annotation_test_images_imgs/{interaction}"
+
+    xlsx_output = os.path.join(checkpoint_dir, f'{interaction}_{architecture}.xlsx')
 
     input_height = 224
     input_width = 224
@@ -90,6 +95,20 @@ if __name__ == "__main__":
     l_loss_val = read_scalar_from_tensorboard_log(dir_logs_val, "loss")
     l_acc_val = read_scalar_from_tensorboard_log(dir_logs_val, "acc")
 
+    print("###########################################################################################################")
+    print("interaction:           ", interaction)
+    print("architecture           ", architecture)
+    print("interactions_set       ", interactions_set)
+    print("analysis_intersection_percentages ", analysis_intersection_percentages)
+    print("ignore_background:     ", ignore_background)
+    print("checkpoint_dir:        ", checkpoint_dir)
+    print("weights_dir:           ", weights_dir)
+    print("logs_dir:              ", logs_dir)
+    print("test_images:           ", test_images)
+    print("annotated_test_images: ", annotated_test_images)
+    print("xlsx_output:           ", xlsx_output)
+
+
     l_epoch = []
     l_arquitecture = []
     l_interaction = []
@@ -118,4 +137,4 @@ if __name__ == "__main__":
             'class wise IU bck': l_class_wise_IU_bck, 'classwise IU it': l_class_wise_IU_it}
 
     df = pd.DataFrame(data)
-    df.to_excel(os.path.join(checkpoint_dir, f'{interaction}_{architecture}.xlsx'), index=False)
+    df.to_excel(xlsx_output, index=False)
