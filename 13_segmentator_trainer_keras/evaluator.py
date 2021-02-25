@@ -54,8 +54,8 @@ if __name__ == "__main__":
     base = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn"
 
     base_dir = f"{base}/{interactions_set}/{analysis_intersection_percentages}"
-    chk_name = "checkpoints_ignore_background" if ignore_background else "checkpoints"
 
+    chk_name = "checkpoints_ignore_background" if ignore_background else "checkpoints"
     checkpoint_dir = f"{base_dir}/{chk_name}"
 
     weights_dir = f"{checkpoint_dir}/{interaction}/{architecture}"

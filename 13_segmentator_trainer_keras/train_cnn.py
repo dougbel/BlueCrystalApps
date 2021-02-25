@@ -25,13 +25,14 @@ if __name__ == "__main__":
     architecture = opt.architecture
     interactions_set = opt.interactions_set
     analysis_intersection_percentages = opt.analysis_intersection_percentages
-    ignore_background = bool(opt.ignore_background)
+    ignore_background = opt.ignore_background == "True"
 
     # to measure the quantity of GPU used
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
 
-    base_path = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn/{interactions_set}/{analysis_intersection_percentages}"
+    base = f"/mnt/storage/home/csapo/scratch/analisys/mpi_routines/train_cnn"
+    base_path = f"{base}/{interactions_set}/{analysis_intersection_percentages}"
 
     chk_name = "checkpoints_ignore_background" if ignore_background else "checkpoints"
 
@@ -63,17 +64,28 @@ if __name__ == "__main__":
         print("invalid architecture")
         exit()
 
-    new_model.train(
-        checkpoints_path=checkpoint_path,
-        auto_resume_checkpoint=True,
-        ignore_zero_class=False,
-        verify_dataset=False,
-        validate=True,  # change to false if dont want to validate
-        validation_split=.2,
-        train_images=train_images,
-        train_annotations=annotated_train_images,
-        input_height=input_height,
-        input_width=input_width,
-        epochs=epochs,
-        batch_size=4
-    )
+    print("###########################################################################################################")
+    print("interaction:            ", interaction)
+    print("architecture            ", architecture)
+    print("interactions_set        ", interactions_set)
+    print("analysis_intersection_percentages ", analysis_intersection_percentages)
+    print("ignore_background:      ", ignore_background)
+    print("checkpoint_path:        ", checkpoint_path)
+    print("train_images:           ", train_images)
+    print("annotated_train_images: ", annotated_train_images)
+
+
+    # new_model.train(
+    #     checkpoints_path=checkpoint_path,
+    #     auto_resume_checkpoint=True,
+    #     ignore_zero_class=ignore_background,
+    #     verify_dataset=False,
+    #     validate=True,  # change to false if dont want to validate
+    #     validation_split=.2,
+    #     train_images=train_images,
+    #     train_annotations=annotated_train_images,
+    #     input_height=input_height,
+    #     input_width=input_width,
+    #     epochs=epochs,
+    #     batch_size=4
+    # )
