@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
 
 
-    """l_epoch = []
+    l_epoch = []
     l_arquitecture = []
     l_interaction = []
     l_frequency_weighted_IU = []
@@ -136,4 +136,4 @@ if __name__ == "__main__":
             'class wise IU bck': l_class_wise_IU_bck, 'classwise IU it': l_class_wise_IU_it}
 
     df = pd.DataFrame(data)
-    df.to_excel(xlsx_output, index=False)"""
+    df.to_excel(xlsx_output, index=False)
