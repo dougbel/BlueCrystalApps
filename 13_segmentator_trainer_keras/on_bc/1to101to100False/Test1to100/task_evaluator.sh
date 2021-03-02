@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#SBATCH --job-name=eval
+#SBATCH --partition=gpu
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=14
+#SBATCH --gres=gpu:1
+#SBATCH --time=20:00:00
+#SBATCH --mem=64G
+#SBATCH --mail-type=ALL
+
+
+module load CUDA/8.0.44-GCC-5.4.0-2.26
+module load libs/cudnn/5.1-cuda-8.0
+module load languages/anaconda3/3.7
+
+source activate keras_gpu
+export PATH=$HOME/.conda/envs/keras_gpu/bin:$PATH
+export PYTHONPATH=/mnt/storage/home/csapo/git_repositories/keras_segmentation:\$PYTHONPATH
+
+echo  "child_laying_child_laying"
+srun python evaluator.py --interaction child_laying_child_laying --architecture segnet
+srun python evaluator.py --interaction child_laying_child_laying --architecture unet
+echo  "laying_human_laying"
+srun python evaluator.py --interaction laying_human_laying --architecture segnet
+srun python evaluator.py --interaction laying_human_laying --architecture unet
+echo  "reaching_out_low_human_reaching_out_low"
+srun python evaluator.py --interaction reaching_out_low_human_reaching_out_low --architecture segnet
+srun python evaluator.py --interaction reaching_out_low_human_reaching_out_low --architecture unet
+echo  "reaching_out_mid_low_human_reaching_out_mid_low"
+srun python evaluator.py --interaction reaching_out_mid_low_human_reaching_out_mid_low --architecture segnet
+srun python evaluator.py --interaction reaching_out_mid_low_human_reaching_out_mid_low --architecture unet
+echo  "sitting_human_sitting"
+srun python evaluator.py --interaction sitting_human_sitting --architecture segnet
+srun python evaluator.py --interaction sitting_human_sitting --architecture unet
+echo  "standing_up_floor_human_standing_up"
+srun python evaluator.py --interaction standing_up_floor_human_standing_up --architecture segnet
+srun python evaluator.py --interaction standing_up_floor_human_standing_up --architecture unet
