@@ -7,7 +7,7 @@ export PYTHONPATH=/home/hal/Abel/git_repositories/keras_segmentation:\$PYTHONPAT
 
 echo  "child_laying_child_laying"
 CUDA_VISIBLE_DEVICES=0 python evaluator.py --interaction child_laying_child_laying --architecture segnet
-CUDA_VISIBLE_DEVICES=0 srun python evaluator.py --interaction child_laying_child_laying --architecture unet
+CUDA_VISIBLE_DEVICES=0 python evaluator.py --interaction child_laying_child_laying --architecture unet
 echo  "laying_human_laying"
 CUDA_VISIBLE_DEVICES=0 python evaluator.py --interaction laying_human_laying --architecture segnet
 CUDA_VISIBLE_DEVICES=0 python evaluator.py --interaction laying_human_laying --architecture unet
