@@ -23,13 +23,13 @@ export PATH=$PREFIX_ENV/bin:$PATH
 export PYTHONPATH=/mnt/storage/home/csapo/git_repositories/iTpy:/mnt/storage/home/csapo/git_repositories/iTpyClearance:/mnt/storage/home/csapo/git_repositories/mpi-master-slave:/mnt/storage/home/csapo/git_repositories/mpi_routines:.:\$PYTHONPATH
 
 echo "working on apartment_1"
-srun --mpi=pmi2 python 02_sdf_calculation_following_prox.py --scans_dir $SCANS_DIR  --scene apartment_1 --grid_dim $GRID_DIM --output_dir $OUTPUT_DIR
+srun --mpi=pmi2 python 02_sdf_calculation_following_prox_MPI.py --scans_dir $SCANS_DIR  --scene apartment_1 --grid_dim $GRID_DIM --output_dir $OUTPUT_DIR
 echo "working on frl_apartment_0"
-srun --mpi=pmi2 python 02_sdf_calculation_following_prox.py --scans_dir $SCANS_DIR  --scene frl_apartment_0 --grid_dim $GRID_DIM --output_dir $OUTPUT_DIR
+srun --mpi=pmi2 python 02_sdf_calculation_following_prox_MPI.py --scans_dir $SCANS_DIR  --scene frl_apartment_0 --grid_dim $GRID_DIM --output_dir $OUTPUT_DIR
 echo "working on hotel_0"
-srun --mpi=pmi2 python 02_sdf_calculation_following_prox.py --scans_dir $SCANS_DIR  --scene hotel_0 --grid_dim $GRID_DIM --output_dir $OUTPUT_DIR
+srun --mpi=pmi2 python 02_sdf_calculation_following_prox_MPI.py --scans_dir $SCANS_DIR  --scene hotel_0 --grid_dim $GRID_DIM --output_dir $OUTPUT_DIR
 echo "working on office_2"
-srun --mpi=pmi2 python 02_sdf_calculation_following_prox.py --scans_dir $SCANS_DIR  --scene office_2 --grid_dim $GRID_DIM --output_dir $OUTPUT_DIR
+srun --mpi=pmi2 python 02_sdf_calculation_following_prox_MPI.py --scans_dir $SCANS_DIR  --scene office_2 --grid_dim $GRID_DIM --output_dir $OUTPUT_DIR
 echo "working on room_0"
-srun --mpi=pmi2 python 02_sdf_calculation_following_prox.py --scans_dir $SCANS_DIR  --scene room_0 --grid_dim $GRID_DIM --output_dir $OUTPUT_DIR
+srun --mpi=pmi2 python 02_sdf_calculation_following_prox_MPI.py --scans_dir $SCANS_DIR  --scene room_0 --grid_dim $GRID_DIM --output_dir $OUTPUT_DIR
 

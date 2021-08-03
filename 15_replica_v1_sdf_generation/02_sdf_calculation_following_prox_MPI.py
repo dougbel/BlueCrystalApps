@@ -55,13 +55,16 @@ class MasterRoutines(object):
         # but it can also be added later as more work become available
         #
 
-        mesh_decimated = trimesh.load(os.path.join(self.scans_dir, self.scene_name + ".ply"))
+        trimesh_scan = trimesh.load(os.path.join(self.scans_dir, self.scene_name + ".ply"))
 
-        bb_padded_vertices = mesh_decimated.bounding_box.vertices * 1.7
+        transform = np.eye(4)
+        # translate to center of axis aligned bounds
+        transform[:3, 3] = trimesh_scan.bounds.mean(axis=0)
+        bb_padded = trimesh.primitives.Box(transform=transform, extents=trimesh_scan.extents * 1.5, mutable=False)
 
 
-        np_min = np.array(bb_padded_vertices.min(axis=0))
-        np_max = np.array(bb_padded_vertices.max(axis=0))
+        np_min = np.array(bb_padded.vertices.min(axis=0))
+        np_max = np.array(bb_padded.vertices.max(axis=0))
         step_x, step_y, step_z = (np_max - np_min) / self.grid_dim
         init_x = step_x / 2 + np_min[0]
         init_y = step_y / 2 + np_min[1]
@@ -176,7 +179,7 @@ if __name__ == "__main__":
     size = MPI.COMM_WORLD.Get_size()
 
     # activate it with debug purposes
-    # mpiexec -n 2 python comparisson/sdf_generation/02_sdf_calculation_MPI_following_prox.py --scans_dir /media/dougbel/Tezcatlipoca/PLACE_trainings/datasets/replica_v1/scenes_downsampled  --scene apartment_1 --grid_dim 10 --output_dir /media/dougbel/Tezcatlipoca/PLACE_trainings/datasets/replica_v1/sdf_tmp
+    # mpiexec -n 2 python comparisson/sdf_generation/02_sdf_calculation_following_prox_MPI.py --scans_dir /media/dougbel/Tezcatlipoca/PLACE_trainings/datasets/replica_v1/scenes_downsampled  --scene apartment_1 --grid_dim 10 --output_dir /media/dougbel/Tezcatlipoca/PLACE_trainings/datasets/replica_v1/sdf_tmp
     # import pydevd_pycharm
     # port_mapping = [44563, 41831]
     # pydevd_pycharm.settrace('localhost', port=port_mapping[rank], stdoutToServer=True, stderrToServer=True)
