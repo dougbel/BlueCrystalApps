@@ -13,8 +13,8 @@ module load OpenMPI/2.0.1-gcccuda-2016.10
 module load languages/anaconda3/3.7
 
 PREFIX_ENV=/mnt/storage/scratch/csapo/conda_envs/trimesh_vedo
-SCANS_DIR=/mnt/storage/home/csapo/scratch/PLACE_comparisson/datasets/replica_v1/scenes_downsampled
-OUTPUT_DIR=/mnt/storage/home/csapo/scratch/PLACE_comparisson/datasets/replica_v1/sdf
+SCANS_DIR=/mnt/storage/home/csapo/scratch/PLACE_trainings/datasets/replica_v1/scenes_downsampled
+OUTPUT_DIR=/mnt/storage/home/csapo/scratch/PLACE_trainings/datasets/replica_v1/sdf
 GRID_DIM=256
 
 

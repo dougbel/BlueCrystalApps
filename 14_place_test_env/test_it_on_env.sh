@@ -1,11 +1,10 @@
 #!/bin/bash
 
 #SBATCH --job-name=envtest
-#SBATCH --partition veryshort
-#SBATCH --nodes=12
-#SBATCH --ntasks-per-node=3
-#SBATCH --cpus-per-task=8
-#SBATCH --time=6:00:00
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=2
+#SBATCH --cpus-per-task=12
+#SBATCH --time=16:00:00
 #SBATCH --mem=96G
 #SBATCH --mail-type=ALL
 
@@ -13,9 +12,9 @@ module load OpenMPI/2.0.1-gcccuda-2016.10
 module load languages/anaconda3/3.7
 
 PREFIX_ENV=/mnt/storage/scratch/csapo/conda_envs/trimesh_vedo
-WORKING_DIRECTORY=/mnt/storage/home/csapo/scratch/PLACE_comparisson/test
-SCANS_DIR=/mnt/storage/home/csapo/scratch/PLACE_comparisson/datasets
-CONFIG_DIR=/mnt/storage/home/csapo/scratch/PLACE_comparisson/config
+WORKING_DIRECTORY=/mnt/storage/home/csapo/scratch/PLACE_trainings/test
+SCANS_DIR=/mnt/storage/home/csapo/scratch/PLACE_trainings/datasets
+CONFIG_DIR=/mnt/storage/home/csapo/scratch/PLACE_trainings/config
 
 
 source activate $PREFIX_ENV
