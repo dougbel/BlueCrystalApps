@@ -124,7 +124,7 @@ class MasterRoutines(object):
 
 
             # sleep some time
-            time.sleep(0.3)
+            time.sleep(0.05)
 
 
         # Saving results

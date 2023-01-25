@@ -1,16 +1,19 @@
 #!/bin/bash
 
 #SBATCH --job-name=sdf_gen
-#SBATCH --partition=cpu
-    #! SBATCH --partition test
-#SBATCH --nodes=16
+#SBATCH --partition=hmem
+  #! #SBATCH --partition=cpu
+  #! SBATCH --partition test
+  #! #SBATCH --nodes=12
+#SBATCH --nodes=4
     #! SBATCH --nodes=2
-#SBATCH --ntasks-per-node=6
-#SBATCH --cpus-per-task=4
-
-#SBATCH --time=3-23:59:00
+#SBATCH --ntasks-per-node=3
+#SBATCH --cpus-per-task=8
+    #! #SBATCH --time=13-23:59:00
     #! SBATCH --time=1:00:00
-#SBATCH --mem=96G
+#SBATCH --time=5-23:59:00
+    #! SBATCH --mem=100G
+#SBATCH --mem=300G
 #SBATCH --mail-type=ALL
 
 module load OpenMPI/2.0.1-gcccuda-2016.10
